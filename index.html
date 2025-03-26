@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GHP - Harmonogram Produkcji</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div id="mrp-items-container" class="space-y-6"></div>
+
+    <!-- <div id="add-mrp-items-container" class="space-y-6">
+        <button
+        id="calculate-btn"
+        class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Oblicz
+      </button>
+    </div> -->
+
+    <div class="max-w-6xl mx-auto space-y-10">
+      <!-- Sekcja GHP -->
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-4">GHP - Harmonogram Produkcji</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-gray-700">Na stanie:</label>
+            <input
+              type="number"
+              id="inStock"
+              value="2"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700">Czas realizacji:</label>
+            <input
+              type="number"
+              id="leadTime"
+              value="1"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700">Liczba tygodni:</label>
+            <input
+              type="number"
+              id="weeksNumber"
+              value="10"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full mt-4 border border-gray-300">
+            <thead id="table-head" class="bg-gray-200"></thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <button
+          id="calculate-btn"
+          class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Oblicz
+        </button>
+      </div>
+
+      <!-- Sekcje MRP -->
+      <div id="mrp-tables-container" class="space-y-6"></div>
+    </div>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
