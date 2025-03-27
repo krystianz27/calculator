@@ -46,9 +46,12 @@ export function calculateMRPFirst(item) {
     demand[i] = productionMPS[i + leadTimeMPS] * quantity;
   }
   demand.forEach((val, index) => {
-    document.getElementById(
+    let el = document.getElementById(
       `${categoriesData[0].className}-${itemClassName}-${index + 1}`
-    ).value = val;
+    );
+    el.value = val;
+    val === 0 && (el.value = null);
+    el.classList.remove("border");
   });
 
   let scheduledReceipts = Array.from(
@@ -86,9 +89,11 @@ export function calculateMRPFirst(item) {
         if (releaseIndex >= 0) {
           plannedOrderReleases[releaseIndex] = lotSize;
           let newCurrentValue =
-            projectedAvailable[t - 1] + plannedOrderReceipts[t] - demand[t];
+            projectedAvailable[t - 1] +
+            scheduledReceipts[t] +
+            plannedOrderReceipts[t] -
+            demand[t];
           projectedAvailable[t] = newCurrentValue;
-          // console.log("NCV", newCurrentValue);
           // Can't if the thable start (1st columns)
         } else {
           projectedAvailable[t] = currentValue;
@@ -116,35 +121,36 @@ export function calculateMRPFirst(item) {
     }
   });
 
-  plannedOrderReleases.forEach((val, index) => {
-    document.getElementById(
-      `${categoriesData[4].className}-${itemClassName}-${index + 1}`
-    ).value = val;
-  });
+  // plannedOrderReleases.forEach((val, index) => {
+  //   document.getElementById(
+  //     `${categoriesData[4].className}-${itemClassName}-${index + 1}`
+  //   ).value = val;
+  // });
 
-  plannedOrderReceipts.forEach((val, index) => {
-    document.getElementById(
-      `${categoriesData[5].className}-${itemClassName}-${index + 1}`
-    ).value = val;
-  });
+  // plannedOrderReceipts.forEach((val, index) => {
+  //   document.getElementById(
+  //     `${categoriesData[5].className}-${itemClassName}-${index + 1}`
+  //   ).value = val;
+  // });
 
-  // function updateTableValues(itemClassName, dataArrays) {
-  //   categoriesData.slice(2).forEach((category, index) => {
-  //     dataArrays[index].forEach((val, t) => {
-  //       const element = document.getElementById(
-  //         `${category.className}-${itemClassName}-${t + 1}`
-  //       );
-  //       if (element) {
-  //         element.value = val;
-  //       }
-  //     });
-  //   });
-  // }
+  function updateTableValues(itemClassName, dataArrays) {
+    categoriesData.slice(3).forEach((category, index) => {
+      dataArrays[index].forEach((val, t) => {
+        const element = document.getElementById(
+          `${category.className}-${itemClassName}-${t + 1}`
+        );
+        if (element) {
+          element.value = val;
+          val === 0 && (element.value = null);
+          element.classList.remove("border");
+        }
+      });
+    });
+  }
 
-  // updateTableValues(itemClassName, [
-  //   projectedAvailable, // categoriesData[2] - "Przewidywane na stanie"
-  //   netRequirements, // categoriesData[3] - "Zapotrzebowanie netto"
-  //   plannedOrderReleases, // categoriesData[4] - "Planowane zamówienia"
-  //   plannedOrderReceipts, // categoriesData[5] - "Planowane przyjęcie zamówień"
-  // ]);
+  updateTableValues(itemClassName, [
+    netRequirements, // categoriesData[3] - "Zapotrzebowanie netto"
+    plannedOrderReleases, // categoriesData[4] - "Planowane zamówienia"
+    plannedOrderReceipts, // categoriesData[5] - "Planowane przyjęcie zamówień"
+  ]);
 }

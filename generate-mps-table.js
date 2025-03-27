@@ -1,4 +1,5 @@
 import { categoriesMPS } from "./mps-data.js";
+console.log("$", categoriesMPS);
 
 export function generateMPSTable() {
   const tbody = document.getElementById("table-body");
@@ -24,13 +25,19 @@ export function generateMPSTable() {
   thLabel.appendChild(lowerDiv);
 
   // thLabel.textContent = "Tydzień";
-  thLabel.classList.add("max-w-24", "py-2", "border-b", "text-right");
+  thLabel.classList.add(
+    "max-w-24",
+    "py-2",
+    "border-b",
+    "border-r",
+    "text-center"
+  );
   headerRow.appendChild(thLabel);
 
   for (let i = 1; i <= weeksNumber; i++) {
     const th = document.createElement("th");
     th.textContent = i;
-    th.classList.add("max-w-14", "py-2", "border-b", "text-center");
+    th.classList.add("max-w-14", "py-2", "border-b", "border-r", "text-left");
     headerRow.appendChild(th);
   }
   thead.appendChild(headerRow);
@@ -38,42 +45,50 @@ export function generateMPSTable() {
   // Generowanie wierszy tabeli
   tbody.innerHTML = "";
 
-  Object.entries(categoriesMPS).forEach(([className, category]) => {
-    const tr = document.createElement("tr");
-    const tdLabel = document.createElement("td");
-    tdLabel.textContent = category;
-    tdLabel.classList.add("max-w-24", "py-2", "border-b", "text-left");
-    tr.appendChild(tdLabel);
+  categoriesMPS.forEach((categoryObj) => {
+    Object.entries(categoryObj).forEach(([key, category]) => {
+      console.log(category);
+      console.log(key);
+      let className = category.className;
 
-    for (let i = 1; i <= weeksNumber; i++) {
-      const td = document.createElement("td");
-      const input = document.createElement("input");
-      input.type = "number";
-      input.className = className; // Teraz używamy className, które jest camelCase
-      input.id = `${className}-${i}`;
-      input.classList.add("max-w-14", "py-2", "border", "rounded");
+      const tr = document.createElement("tr");
+      const tdLabel = document.createElement("td");
 
-      if (className === "availableMPS") {
-        // "Dostępne"
-        input.readOnly = true;
-        input.placeholder = "?";
-      } else if (className === "demandMPS") {
-        // "Przewidywany Popyt"
-        input.value = i === 5 ? 20 : i === 7 ? 40 : 0; // Wartości domyślne
-      } else if (className === "productionMPS") {
-        // "Produkcja"
-        tdLabel.classList.add("bg-yellow-300");
-        td.classList.add("bg-yellow-300");
-        input.classList.add("bg-yellow-300");
-        input.value = i === 5 ? 18 : i === 7 ? 40 : 0; // Wartości domyślne
-      } else {
-        input.value = 0;
+      tdLabel.textContent = category.name;
+      tdLabel.classList.add("max-w-24", "py-2", "border-b", "text-left");
+      tr.appendChild(tdLabel);
+
+      for (let i = 1; i <= weeksNumber; i++) {
+        const td = document.createElement("td");
+        const input = document.createElement("input");
+
+        input.type = "number";
+        input.className = className; // Teraz używamy className, które jest camelCase
+        input.id = `${className}-${i}`;
+        input.classList.add(className, "max-w-14", "py-2", "border", "rounded");
+
+        if (className === "availableMPS") {
+          // "Dostępne"
+          input.readOnly = true;
+          input.placeholder = "?";
+        } else if (className === "demandMPS") {
+          // "Przewidywany Popyt"
+          input.value = i === 5 ? 20 : i === 7 ? 40 : 0; // Wartości domyślne
+        } else if (className === "productionMPS") {
+          // "Produkcja"
+          tdLabel.classList.add("bg-yellow-300");
+          td.classList.add("bg-yellow-300");
+          input.classList.add("bg-yellow-300");
+          input.value = i === 5 ? 18 : i === 7 ? 40 : 0; // Wartości domyślne
+        } else {
+          input.value = 0;
+        }
+
+        td.appendChild(input);
+        tr.appendChild(td);
       }
 
-      td.appendChild(input);
-      tr.appendChild(td);
-    }
-
-    tbody.appendChild(tr);
+      tbody.appendChild(tr);
+    });
   });
 }

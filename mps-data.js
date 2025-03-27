@@ -3,11 +3,34 @@ export const productMPS = {
   className: "bicycle",
 };
 
-export const categoriesMPS = {
-  demandMPS: "Przewidywany Popyt",
-  productionMPS: "Produkcja",
-  availableMPS: "Dostępne",
-};
+export const categoriesMPS = [
+  {
+    demandMPS: { name: "Przewidywany Popyt", className: "demandMPS" },
+    productionMPS: { name: "Produkcja", className: "productionMPS" },
+    availableMPS: { name: "Dostępne", className: "availableMPS" },
+  },
+];
+
+// export const categoriesMPS = [
+//   {
+//     name: "Przewidywany Popyt",
+//     className: "demandMPS",
+//   },
+//   {
+//     name: "Produkcja",
+//     className: "productionMPS",
+//   },
+//   {
+//     name: "Dostępne",
+//     className: "availableMPS",
+//   },
+// ];
+
+// export const categoriesMPS = {
+//   demandMPS: "Przewidywany Popyt",
+//   productionMPS: "Produkcja",
+//   availableMPS: "Dostępne",
+// };
 
 export const productionParametersMPS = [
   {

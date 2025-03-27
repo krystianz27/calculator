@@ -64,6 +64,15 @@ export function calculateMRPSecond(item) {
     demand[i] = plannedOrderReleasesParent[i] * quantity;
   }
 
+  demand.forEach((val, index) => {
+    let el = document.getElementById(
+      `${categoriesData[0].className}-${itemClassName}-${index + 1}`
+    );
+    el.value = val;
+    val === 0 && (el.value = null);
+    el.classList.remove("border");
+  });
+
   let scheduledReceipts = Array.from(
     document.querySelectorAll(
       `.${categoriesData[1].className}-${itemClassName}`
@@ -101,9 +110,11 @@ export function calculateMRPSecond(item) {
           plannedOrderReleases[releaseIndex] = lotSize;
 
           let newCurrentValue =
-            projectedAvailable[t - 1] + plannedOrderReceipts[t] - demand[t];
+            projectedAvailable[t - 1] +
+            scheduledReceipts[t] +
+            plannedOrderReceipts[t] -
+            demand[t];
           projectedAvailable[t] = newCurrentValue;
-          // console.log("NCV", newCurrentValue);
           // Can't if the thable start (1st columns)
         } else {
           projectedAvailable[t] = currentValue;
@@ -122,26 +133,43 @@ export function calculateMRPSecond(item) {
   });
 
   netRequirements.forEach((val, index) => {
-    let el = document.getElementById(
-      `${categoriesData[3].className}-${itemClassName}-${index + 1}`
-    );
-    el.value = val;
-    if (colorWarning[index]) {
-      el.classList.add("bg-red-600");
-    } else {
-      el.classList.remove("bg-red-600");
+    let elementId = `${categoriesData[3].className}-${itemClassName}-${
+      index + 1
+    }`;
+    let element = document.getElementById(elementId);
+    if (element) {
+      if (colorWarning[index]) {
+        element.classList.add("bg-red-600");
+      } else {
+        element.classList.remove("bg-red-600");
+      }
+      element.value = val;
+      val === 0 && (element.value = null);
+      element.classList.remove("border");
     }
   });
 
   plannedOrderReleases.forEach((val, index) => {
-    document.getElementById(
-      `${categoriesData[4].className}-${itemClassName}-${index + 1}`
-    ).value = val;
+    let elementId = `${categoriesData[4].className}-${itemClassName}-${
+      index + 1
+    }`;
+    let element = document.getElementById(elementId);
+    if (element) {
+      element.value = val;
+      val === 0 && (element.value = null);
+      element.classList.remove("border");
+    }
   });
 
   plannedOrderReceipts.forEach((val, index) => {
-    document.getElementById(
-      `${categoriesData[5].className}-${itemClassName}-${index + 1}`
-    ).value = val;
+    let elementId = `${categoriesData[5].className}-${itemClassName}-${
+      index + 1
+    }`;
+    let element = document.getElementById(elementId);
+    if (element) {
+      element.value = val;
+      val === 0 && (element.value = null);
+      element.classList.remove("border");
+    }
   });
 }

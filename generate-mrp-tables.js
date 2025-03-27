@@ -36,6 +36,8 @@ function generateTableForItem(item) {
     "max-w-24",
     "py-2",
     "border-b",
+    "border-zinc-400",
+    "border-r",
     "text-left",
     "align-bottom"
   );
@@ -44,7 +46,12 @@ function generateTableForItem(item) {
   for (let i = 1; i <= weeksNumber; i++) {
     const th = document.createElement("th");
     th.textContent = i;
-    th.classList.add("max-w-14", "py-2", "border-b", "text-center");
+    th.classList.add("max-w-14", "py-2", "text-center");
+    if (i !== weeksNumber) {
+      th.classList.add("border-zinc-400", "border-b", "border-r");
+    } else {
+      th.classList.add("border-zinc-400", "border-b");
+    }
     headerRow.appendChild(th);
   }
   thead.appendChild(headerRow);
@@ -54,20 +61,40 @@ function generateTableForItem(item) {
 
   categoriesData.forEach(({ name, className }, categoryIndex) => {
     const tr = document.createElement("tr");
+    tr.classList.add("border-b", "border-zinc-400");
     const tdLabel = document.createElement("td");
     tdLabel.textContent = name;
-    tdLabel.classList.add("max-w-24", "py-2", "border-b", "text-left");
+    tdLabel.classList.add(
+      "max-w-26",
+      "py-2",
+      "border-zinc-400",
+      "border-b",
+      "border-r",
+      "text-left"
+    );
     tr.appendChild(tdLabel);
 
     for (let i = 1; i <= weeksNumber; i++) {
       const td = document.createElement("td");
+      td.classList.add("text-center");
+
+      if (i !== weeksNumber) {
+        td.classList.add("border-zinc-400", "border-b", "border-r");
+      } else {
+        td.classList.add("border-b", "border-zinc-400");
+      }
       const input = document.createElement("input");
       input.type = "number";
       const clsName = `${className}-${item.className}`;
       input.className = clsName;
-      // input.id = `${className}-${item}-${i}`;
       input.id = `${clsName}-${i}`;
-      input.classList.add("max-w-14", "py-2", "border", "rounded");
+      input.classList.add(
+        "max-w-14",
+        "py-2",
+        "border",
+        "rounded",
+        "text-center"
+      );
 
       if (item.level === 1) {
         if (categoryIndex === 0) {
@@ -79,9 +106,15 @@ function generateTableForItem(item) {
         } else if (categoryIndex === 2) {
           input.readOnly = true;
           input.value = 0;
+          tdLabel.classList.add("bg-gray-50");
+          td.classList.add("bg-gray-50");
+          input.classList.add("bg-gray-50");
         } else if (categoryIndex === 3) {
           input.readOnly = true;
           input.value = 0;
+          tdLabel.classList.add("bg-gray-100");
+          td.classList.add("bg-gray-100");
+          input.classList.add("bg-gray-100");
         } else if (categoryIndex === 4) {
           tdLabel.classList.add("bg-green-300");
           td.classList.add("bg-green-300");
@@ -96,6 +129,9 @@ function generateTableForItem(item) {
           input.readOnly = true;
         } else {
           input.value = 0;
+          tdLabel.classList.add("bg-gray-100");
+          td.classList.add("bg-gray-100");
+          input.classList.add("bg-gray-100");
         }
 
         td.appendChild(input);
@@ -107,16 +143,34 @@ function generateTableForItem(item) {
           input.classList.add("bg-green-300");
           input.value = 0;
           input.readOnly = true;
+        } else if (categoryIndex === 1) {
+          tdLabel.classList.add("bg-gray-50");
+          td.classList.add("bg-gray-50");
+          input.classList.add("bg-gray-50");
+          // input.readOnly = true;
+          input.value = 0;
         } else if (categoryIndex === 2) {
+          tdLabel.classList.add("bg-gray-100");
+          td.classList.add("bg-gray-100");
+          input.classList.add("bg-gray-100");
           input.readOnly = true;
           input.value = 0;
         } else if (categoryIndex === 3) {
+          tdLabel.classList.add("bg-gray-50");
+          td.classList.add("bg-gray-50");
+          input.classList.add("bg-gray-50");
           input.readOnly = true;
           input.value = 0;
         } else if (categoryIndex === 4) {
+          tdLabel.classList.add("bg-gray-100");
+          td.classList.add("bg-gray-100");
+          input.classList.add("bg-gray-100");
           input.readOnly = true;
           input.value = 0;
         } else if (categoryIndex === 5) {
+          tdLabel.classList.add("bg-gray-50");
+          td.classList.add("bg-gray-50");
+          input.classList.add("bg-gray-50");
           input.readOnly = true;
           input.value = 0;
         } else {

@@ -28,7 +28,7 @@ export const generateMRPItems = () => {
                   .join("")}
               </div>
               <div class="overflow-x-auto">
-                <table class='w-full mt-4 border border-gray-300'>
+                <table class='w-full mt-4 border border-gray-900'>
                   <thead id='table-head-${
                     item.className
                   }' class='bg-gray-200'></thead>
