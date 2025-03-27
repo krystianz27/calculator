@@ -19,12 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const weeksInput = document.getElementById("weeksNumber");
   weeksInput.addEventListener("input", generateAllTables);
 
-  // function calculateAllTables() {
-  //   [calculateMPSTable, calculateMRPTables].forEach((fn) => fn());
-  // }
   function calculateAllTables() {
-    calculateMPSTable();
-    calculateMRPTables();
+    [calculateMPSTable, calculateMRPTables].forEach((fn) => fn());
   }
 
   document

@@ -7,8 +7,8 @@ export const generateMRPItems = () => {
       .map(
         (item) => `
             <div class='bg-white p-6 rounded-lg shadow-md'>
-              <h3 class='text-xl font-semibold mb-4'>MRP Record for ${
-                item.className
+              <h3 class='text-xl text-center font-semibold mb-4'>MRP Iteracja dla ${
+                item.name
               }</h3>
               <div class='grid grid-cols-2 md:grid-cols-4 gap-4'>
                 ${productionParameters
@@ -37,7 +37,7 @@ export const generateMRPItems = () => {
               </div>
               <button id='calculate-btn-${
                 item.className
-              }' class='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'>Oblicz</button>
+              }' class='calculate-all-btn mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'>Oblicz</button>
             </div>
           `
       )

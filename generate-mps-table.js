@@ -1,15 +1,9 @@
-// import { categoriesMPS } from "./table-data";
+import { categoriesMPS } from "./mps-data.js";
 
 export function generateMPSTable() {
   const tbody = document.getElementById("table-body");
   const thead = document.getElementById("table-head");
   const weeksInput = document.getElementById("weeksNumber");
-
-  const categoriesMPS = {
-    demandMPS: "Przewidywany Popyt",
-    productionMPS: "Produkcja",
-    availableMPS: "Dostępne",
-  };
 
   let weeksNumber = parseInt(weeksInput.value) || 10;
 
@@ -56,7 +50,10 @@ export function generateMPSTable() {
         input.value = i === 5 ? 20 : i === 7 ? 40 : 0; // Wartości domyślne
       } else if (className === "productionMPS") {
         // "Produkcja"
-        input.value = i === 5 ? 28 : i === 7 ? 30 : 0; // Wartości domyślne
+        tdLabel.classList.add("bg-yellow-300");
+        td.classList.add("bg-yellow-300");
+        input.classList.add("bg-yellow-300");
+        input.value = i === 5 ? 18 : i === 7 ? 40 : 0; // Wartości domyślne
       } else {
         input.value = 0;
       }

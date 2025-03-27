@@ -1,21 +1,37 @@
 import { categoriesData, productionParameters } from "./mrp-data.js";
 
-export function calculateMRPFirst(item) {
-  if (item.level !== 1) return;
+export function calculateMRPSecond(item) {
+  console.log("Calculating second");
+  if (item.level !== 2) return;
+  let itemClassName = item.className;
+  const parentClassName = item.parentClassName;
 
   let weeksNumber =
     parseInt(document.getElementById("weeksNumber").value) || 10;
-
-  const leadTimeMPS =
+  const leadTimeParent =
     parseInt(
-      document.getElementById(productionParameters[0].className).value
+      document.getElementById(
+        `${productionParameters[0].className}-${parentClassName}`
+      ).value
     ) || 0;
 
-  const productionMPS = Array.from(
-    document.querySelectorAll(".productionMPS")
+  const plannedOrderReleasesParent = Array.from(
+    document.querySelectorAll(
+      `.${categoriesData[4].className}-${parentClassName}`
+    )
   ).map((el) => parseInt(el.value) || 0);
 
-  const itemClassName = item.className;
+  plannedOrderReleasesParent.forEach((val, index) => {
+    document.getElementById(
+      `${categoriesData[0].className}-${itemClassName}-${index + 1}`
+    ).value = val;
+  });
+
+  console.log(
+    "Parent Order Releases ",
+    parentClassName,
+    plannedOrderReleasesParent
+  );
 
   let inStock = parseInt(
     document.getElementById(
@@ -40,16 +56,13 @@ export function calculateMRPFirst(item) {
     ).value
   );
 
+  let colorWarning = Array(weeksNumber).fill(false);
+
   let demand = Array(weeksNumber).fill(0);
 
-  for (let i = 0; i < weeksNumber - leadTimeMPS; i++) {
-    demand[i] = productionMPS[i + leadTimeMPS] * quantity;
+  for (let i = 0; i < weeksNumber; i++) {
+    demand[i] = plannedOrderReleasesParent[i] * quantity;
   }
-  demand.forEach((val, index) => {
-    document.getElementById(
-      `${categoriesData[0].className}-${itemClassName}-${index + 1}`
-    ).value = val;
-  });
 
   let scheduledReceipts = Array.from(
     document.querySelectorAll(
@@ -64,9 +77,10 @@ export function calculateMRPFirst(item) {
   let plannedOrderReceipts = Array(weeksNumber).fill(0);
 
   let projectedAvailable = Array(weeksNumber).fill(0);
-  projectedAvailable[0] = inStock + scheduledReceipts[0] - productionMPS[0];
+  projectedAvailable[0] = inStock + scheduledReceipts[0] - demand[0];
 
-  let colorWarning = Array(weeksNumber).fill(false);
+  projectedAvailable[0] < 0 &&
+    ((netRequirements[0] = -projectedAvailable[0]), (colorWarning[0] = true));
 
   function calculateProjectedAvailable() {
     for (let t = 1; t < weeksNumber; t++) {
@@ -80,11 +94,12 @@ export function calculateMRPFirst(item) {
       } else {
         netRequirements[t] = -currentValue;
         colorWarning[t] = true;
-        plannedOrderReceipts[t] = lotSize;
 
         let releaseIndex = t - leadTime;
         if (releaseIndex >= 0) {
+          plannedOrderReceipts[t] = lotSize;
           plannedOrderReleases[releaseIndex] = lotSize;
+
           let newCurrentValue =
             projectedAvailable[t - 1] + plannedOrderReceipts[t] - demand[t];
           projectedAvailable[t] = newCurrentValue;
@@ -97,6 +112,8 @@ export function calculateMRPFirst(item) {
     }
   }
   calculateProjectedAvailable();
+
+  //   Update values in the tables
 
   projectedAvailable.forEach((val, index) => {
     document.getElementById(
@@ -127,24 +144,4 @@ export function calculateMRPFirst(item) {
       `${categoriesData[5].className}-${itemClassName}-${index + 1}`
     ).value = val;
   });
-
-  // function updateTableValues(itemClassName, dataArrays) {
-  //   categoriesData.slice(2).forEach((category, index) => {
-  //     dataArrays[index].forEach((val, t) => {
-  //       const element = document.getElementById(
-  //         `${category.className}-${itemClassName}-${t + 1}`
-  //       );
-  //       if (element) {
-  //         element.value = val;
-  //       }
-  //     });
-  //   });
-  // }
-
-  // updateTableValues(itemClassName, [
-  //   projectedAvailable, // categoriesData[2] - "Przewidywane na stanie"
-  //   netRequirements, // categoriesData[3] - "Zapotrzebowanie netto"
-  //   plannedOrderReleases, // categoriesData[4] - "Planowane zamówienia"
-  //   plannedOrderReceipts, // categoriesData[5] - "Planowane przyjęcie zamówień"
-  // ]);
 }
