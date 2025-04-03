@@ -28,6 +28,7 @@ export function generateMPSTable() {
   thLabel.classList.add(
     "max-w-24",
     "py-2",
+    "border-gray-600",
     "border-b",
     "border-r",
     "text-center"
@@ -37,7 +38,14 @@ export function generateMPSTable() {
   for (let i = 1; i <= weeksNumber; i++) {
     const th = document.createElement("th");
     th.textContent = i;
-    th.classList.add("max-w-14", "py-2", "border-b", "border-r", "text-left");
+    th.classList.add(
+      "max-w-14",
+      "py-2",
+      "border-gray-600",
+      "border-b",
+      "border-r",
+      "text-center"
+    );
     headerRow.appendChild(th);
   }
   thead.appendChild(headerRow);
@@ -55,17 +63,37 @@ export function generateMPSTable() {
       const tdLabel = document.createElement("td");
 
       tdLabel.textContent = category.name;
-      tdLabel.classList.add("max-w-24", "py-2", "border-b", "text-left");
+      tdLabel.classList.add(
+        "max-w-24",
+        "py-2",
+        "border-gray-400",
+        "border-r",
+        "border-b",
+        "text-left"
+      );
       tr.appendChild(tdLabel);
 
       for (let i = 1; i <= weeksNumber; i++) {
         const td = document.createElement("td");
+        td.classList.add(
+          "text-center",
+          "border-gray-400",
+          "border-r",
+          "border-b"
+        );
         const input = document.createElement("input");
 
         input.type = "number";
         input.className = className; // Teraz używamy className, które jest camelCase
         input.id = `${className}-${i}`;
-        input.classList.add(className, "max-w-14", "py-2", "border", "rounded");
+        input.classList.add(
+          className,
+          "max-w-14",
+          "py-2",
+          "border",
+          "text-center",
+          "rounded"
+        );
 
         if (className === "availableMPS") {
           // "Dostępne"

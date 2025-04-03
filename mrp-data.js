@@ -1,5 +1,18 @@
 export const items = [
   {
+    id: 9,
+    name: "Łańcuch",
+    level: 1,
+    parentItem: "0",
+    parentId: null,
+    parentClassName: null,
+    quantity: 1,
+    className: "chain",
+    leadTime: 2,
+    lotSize: 90,
+    inStock: 40,
+  },
+  {
     id: 1,
     name: "Koło",
     level: 1,
@@ -10,7 +23,7 @@ export const items = [
     className: "wheel",
     leadTime: 2,
     lotSize: 80,
-    inStock: 40,
+    inStock: 70,
   },
   {
     id: 2,
@@ -23,7 +36,7 @@ export const items = [
     className: "spoke",
     leadTime: 1,
     lotSize: 50,
-    inStock: 10,
+    inStock: 140,
   },
   {
     id: 3,
@@ -36,7 +49,7 @@ export const items = [
     className: "tire",
     leadTime: 1,
     lotSize: 120,
-    inStock: 1,
+    inStock: 230,
   },
   {
     id: 4,
@@ -48,8 +61,8 @@ export const items = [
     className: "frame",
     parentClassName: "frame",
     leadTime: 1,
-    lotSize: 120,
-    inStock: 1,
+    lotSize: 70,
+    inStock: 40,
   },
   {
     id: 5,
@@ -61,8 +74,8 @@ export const items = [
     className: "handlebar",
     parentClassName: "frame",
     leadTime: 1,
-    lotSize: 120,
-    inStock: 1,
+    lotSize: 60,
+    inStock: 80,
   },
   {
     id: 6,
@@ -74,8 +87,8 @@ export const items = [
     quantity: 1,
     className: "saddle",
     leadTime: 1,
-    lotSize: 120,
-    inStock: 1,
+    lotSize: 90,
+    inStock: 60,
   },
   {
     id: 7,
@@ -87,8 +100,8 @@ export const items = [
     quantity: 2,
     className: "brake",
     leadTime: 1,
-    lotSize: 120,
-    inStock: 1,
+    lotSize: 80,
+    inStock: 40,
   },
   {
     id: 8,
@@ -100,21 +113,8 @@ export const items = [
     quantity: 2,
     className: "pedal",
     leadTime: 1,
-    lotSize: 120,
-    inStock: 1,
-  },
-  {
-    id: 9,
-    name: "Łańcuch",
-    level: 1,
-    parentItem: "0",
-    parentId: null,
-    parentClassName: null,
-    quantity: 1,
-    className: "chain",
-    leadTime: 1,
-    lotSize: 120,
-    inStock: 1,
+    lotSize: 100,
+    inStock: 75,
   },
 ];
 
